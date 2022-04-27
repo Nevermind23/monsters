@@ -1,6 +1,8 @@
-# Getting Started with Create React App
+![](preview.png)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# My first project in React
+
+This is a really simple react app, displaying list of monsters from the API.
 
 ## Available Scripts
 

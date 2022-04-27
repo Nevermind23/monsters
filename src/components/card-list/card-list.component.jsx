@@ -1,6 +1,6 @@
 import {Component} from "react";
-import CardComponent from "./card.component";
-import "./card.style.css";
+import CardComponent from "../card/card.component";
+import "./card-list.style.css";
 
 class CardListComponent extends Component {
     render() {
