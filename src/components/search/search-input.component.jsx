@@ -2,14 +2,6 @@ import {Component} from "react";
 import "./search.style.css";
 
 class SearchInputComponent extends Component {
-    constructor() {
-        super();
-
-        this.state = {
-            query: "",
-        };
-    }
-
     render() {
         return (
             <input
