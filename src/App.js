@@ -1,44 +1,40 @@
 import "./App.css";
-import {Component} from "react";
+import {useEffect, useState} from "react";
 import CardListComponent from "./components/card-list/card-list.component";
 import SearchInputComponent from "./components/search/search-input.component";
 
-class App extends Component {
-    constructor() {
-        super();
 
-        this.state = {
-            monsters: [],
-            query: "",
-        };
-    }
+const App = () => {
+    const [searchQuery, setSearchQuery] = useState("");
+    const [monsters, setMonsters] = useState([]);
+    const [filteredMonsters, setFilteredMonsters] = useState([]);
 
-    componentDidMount() {
+    useEffect(() => {
         fetch("https://jsonplaceholder.typicode.com/users")
             .then((res) => res.json())
-            .then((users) => this.setState({monsters: users}));
-    }
+            .then((users) => setMonsters(users));
+    }, [])
 
-    queryUpdated = (event) => {
+    useEffect(() => {
+        setFilteredMonsters(monsters.filter((monster) => {
+            return monster.name.toLowerCase().includes(searchQuery);
+        }));
+    }, [monsters, searchQuery])
+
+    const queryUpdated = (event) => {
         const query = event.target.value.toLowerCase();
-        this.setState({query});
+        setSearchQuery(query);
     };
 
-    render() {
-        const filteredMonsters = this.state.monsters.filter((monster) => {
-            return monster.name.toLowerCase().includes(this.state.query);
-        });
-
-        return (
-            <div className="App">
-                <h1 className='page-title'>Monsters</h1>
-                <SearchInputComponent
-                    placeholder={"Search monsters..."}
-                    onChangeHandler={this.queryUpdated}/>
-                <CardListComponent monsters={filteredMonsters}/>
-            </div>
-        );
-    }
-}
+    return (
+        <div className="App">
+            <h1 className="page-title">Monsters</h1>
+            <SearchInputComponent
+                placeholder={"Search monsters..."}
+                onChangeHandler={queryUpdated}/>
+            <CardListComponent monsters={filteredMonsters}/>
+        </div>
+    );
+};
 
 export default App;
